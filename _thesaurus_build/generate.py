@@ -347,21 +347,28 @@ HTML = r"""<!doctype html>
   .comments-section{
     max-width: 700px;
     margin: 0 auto;
-    padding: 0 40px 60px;
+    padding: 0 40px 40px;
   }
-  .comments-section h3{
-    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
-    font-size: 1.1rem;
-    margin: 0 0 4px;
-    color: var(--ink);
+  .comments-section summary{
+    cursor:pointer;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    list-style: none;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
   }
+  .comments-section summary::-webkit-details-marker{ display:none; }
+  .comments-section summary::before{ content: "\1F4AC  "; }
+  .comments-section summary .arrow::after{ content: " \25BE"; color: var(--ink-faint); }
+  .comments-section[open] summary .arrow::after{ content: " \25B4"; }
   .comments-section .hint{
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--ink-faint);
-    margin-bottom: 16px;
+    margin: 4px 0 16px;
   }
+  .comments-section .widget-wrap{ min-height: 60px; }
   @media (max-width: 780px){
-    .comments-section{ padding: 0 20px 40px; }
+    .comments-section{ padding: 0 20px 30px; }
   }
   @media (max-width: 780px){
     main{ flex-direction:column; }
@@ -395,25 +402,11 @@ HTML = r"""<!doctype html>
   <div><button id="exportBtn" type="button">Export my additions (.json)</button></div>
 </footer>
 
-<div class="comments-section">
-  <h3>Comments &amp; suggestions</h3>
+<details class="comments-section" id="commentsSection">
+  <summary><span class="arrow">Comments &amp; suggestions</span></summary>
   <div class="hint">Sign in with GitHub to suggest a beat, a headword, or a fix — nothing here changes the thesaurus itself until Amel folds it in.</div>
-  <script src="https://giscus.app/client.js"
-    data-repo="amelabrs/writers-thesaurus"
-    data-repo-id="R_kgDOUTruqA"
-    data-category="Announcements"
-    data-category-id="DIC_kwDOUTruqM4DFRwS"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="preferred_color_scheme"
-    data-lang="en"
-    crossorigin="anonymous"
-    async>
-  </script>
-</div>
+  <div class="widget-wrap" id="giscusWrap"></div>
+</details>
 
 <script id="builtin-data" type="application/json">__DATA_JSON__</script>
 <script>
@@ -863,6 +856,32 @@ HTML = r"""<!doctype html>
     document.body.removeChild(a);
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
   });
+
+  var commentsSection = document.getElementById('commentsSection');
+  if (commentsSection){
+    var giscusLoaded = false;
+    commentsSection.addEventListener('toggle', function(){
+      if (commentsSection.open && !giscusLoaded){
+        giscusLoaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'amelabrs/writers-thesaurus');
+        s.setAttribute('data-repo-id', 'R_kgDOUTruqA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOUTruqM4DFRwS');
+        s.setAttribute('data-mapping', 'pathname');
+        s.setAttribute('data-strict', '0');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '0');
+        s.setAttribute('data-input-position', 'bottom');
+        s.setAttribute('data-theme', 'preferred_color_scheme');
+        s.setAttribute('data-lang', 'en');
+        s.crossOrigin = 'anonymous';
+        s.async = true;
+        document.getElementById('giscusWrap').appendChild(s);
+      }
+    });
+  }
 
   render();
 })();
