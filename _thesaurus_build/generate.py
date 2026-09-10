@@ -344,6 +344,25 @@ HTML = r"""<!doctype html>
     padding: 6px 12px; border-radius: 8px; cursor:pointer; font-size: 0.78rem;
   }
   footer.tools button:hover{ border-color: var(--accent-soft); color: var(--accent); }
+  .comments-section{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+  }
+  .comments-section h3{
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 1.1rem;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .comments-section .hint{
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  @media (max-width: 780px){
+    .comments-section{ padding: 0 20px 40px; }
+  }
   @media (max-width: 780px){
     main{ flex-direction:column; }
     nav.index{ width:100%; max-height: 220px; border-right:none; border-bottom: 1px solid var(--line); }
@@ -375,6 +394,26 @@ HTML = r"""<!doctype html>
   <span id="statline"></span>
   <div><button id="exportBtn" type="button">Export my additions (.json)</button></div>
 </footer>
+
+<div class="comments-section">
+  <h3>Comments &amp; suggestions</h3>
+  <div class="hint">Sign in with GitHub to suggest a beat, a headword, or a fix — nothing here changes the thesaurus itself until Amel folds it in.</div>
+  <script src="https://giscus.app/client.js"
+    data-repo="amelabrs/writers-thesaurus"
+    data-repo-id="R_kgDOUTruqA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOUTruqM4DFRwS"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
 
 <script id="builtin-data" type="application/json">__DATA_JSON__</script>
 <script>
